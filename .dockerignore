@@ -1,0 +1,15 @@
+**/bin/
+**/obj/
+**/.vs/
+**/.vscode/
+**/.idea/
+**/*.user
+**/*.db
+**/*.db-shm
+**/*.db-wal
+**/TestResults/
+.git/
+.gitignore
+README.md
+Dockerfile
+.dockerignore

@@ -1,0 +1,31 @@
+## .NET
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+artifacts/
+*.user
+*.suo
+*.userprefs
+
+## Rider / Visual Studio / VS Code
+.vs/
+.idea/
+.vscode/
+*.DotSettings.user
+
+## SQLite databases created at runtime
+*.db
+*.db-shm
+*.db-wal
+
+## Local secrets and environment overrides - never commit these
+appsettings.*.Local.json
+*.env
+.env
+
+## Test output
+TestResults/
+coverage*.json
+coverage*.xml
+*.trx

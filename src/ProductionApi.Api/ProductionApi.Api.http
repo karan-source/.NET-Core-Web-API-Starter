@@ -1,0 +1,44 @@
+@ProductionApi_HostAddress = http://localhost:5080
+
+### List products (anonymous, paged)
+GET {{ProductionApi_HostAddress}}/api/products?pageNumber=1&pageSize=10
+Accept: application/json
+
+### Search products
+GET {{ProductionApi_HostAddress}}/api/products?search=desk
+Accept: application/json
+
+### Health check
+GET {{ProductionApi_HostAddress}}/health
+
+### Get a development token (development environment only)
+# @name devToken
+POST {{ProductionApi_HostAddress}}/api/auth/dev-token
+Content-Type: application/json
+
+{
+  "email": "demo@example.com"
+}
+
+### Create a product (requires the token above)
+POST {{ProductionApi_HostAddress}}/api/products
+Content-Type: application/json
+Authorization: Bearer {{devToken.response.body.accessToken}}
+
+{
+  "name": "Ergonomic Chair",
+  "description": "Adjustable lumbar support.",
+  "price": 349.00,
+  "stockQuantity": 12
+}
+
+### Validation failure example (price must be greater than zero)
+POST {{ProductionApi_HostAddress}}/api/products
+Content-Type: application/json
+Authorization: Bearer {{devToken.response.body.accessToken}}
+
+{
+  "name": "",
+  "price": -5,
+  "stockQuantity": -1
+}

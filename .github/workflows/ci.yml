@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore ProductionApi.slnx
+
+      - name: Build
+        run: dotnet build ProductionApi.slnx --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test ProductionApi.slnx --configuration Release --no-build --verbosity normal
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build container image
+        run: docker build -t productionapi:${{ github.sha }} .
